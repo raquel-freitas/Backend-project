@@ -4,14 +4,15 @@ import java.util.ArrayList;
 
 import com.example.organiza.model.Usuario;
 
-public class UsuarioResponseDTO extends BasicDTO{
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-//	public class UsuarioResponseDTO extends BasicDTO{
-	public Usuario usuario;
+@Data
+@EqualsAndHashCode(callSuper = false)
+public class UsuarioResponseDTO extends BasicDTO {
+    private Usuario usuario;
 
-	public UsuarioResponseDTO() {
-			super.setMensagem(new ArrayList<>());
-		}
-//	}
-
+    public UsuarioResponseDTO() {
+        super.setMensagem(new ArrayList<>());
+    }
 }

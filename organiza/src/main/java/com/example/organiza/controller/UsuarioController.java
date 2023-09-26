@@ -1,12 +1,16 @@
 package com.example.organiza.controller;
 
+import jakarta.validation.Valid;
 import java.util.List;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,11 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.dto.UsuarioResponseDTO;
 import com.example.organiza.model.Usuario;
 import com.example.organiza.repository.UsuarioRepository;
 
 @RestController
 @RequestMapping("/usuario")
+
 public class UsuarioController {
 	
 	@Autowired
@@ -36,9 +42,30 @@ public class UsuarioController {
 
 	@PostMapping
 	@ResponseStatus (HttpStatus.CREATED)
-	public Usuario adicionar (@RequestBody Usuario usuario) {
-		return usuarioRepository.save(usuario);
+	public ResponseEntity<UsuarioResponseDTO> adicionar (@Valid @RequestBody Usuario usuario, BindingResult bindingResult) {
+		UsuarioResponseDTO response = new UsuarioResponseDTO();
+		response.setStatusCode("200");
+		if (bindingResult.hasErrors()) {
+			response.setStatusCode("199");
+			for (ObjectError obj : bindingResult.getAllErrors()) {
+				response.getMensagem().add(obj.getDefaultMessage());
+			}
+			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+		} else {
+			try {
+				usuario = usuarioRepository.save(usuario);
+				response.usuario = usuario;
+				response.getMensagem().add("Usuário cadastrado com sucesso");
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			} catch (DataIntegrityViolationException e) {
+				response.usuario = usuario;
+				response.getMensagem().add(e.getLocalizedMessage());
+				return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+			}
 		}
+	
+//		return usuarioRepository.save(usuario);
+	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<Usuario> atualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuarioAtualizado) {

@@ -9,24 +9,13 @@
 //import org.springframework.http.HttpStatus;
 //import org.springframework.http.ResponseEntity;
 //import org.springframework.validation.BindingResult;
-//import org.springframework.web.bind.annotation.DeleteMapping;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.PathVariable;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.PutMapping;
-//import org.springframework.web.bind.annotation.RequestBody;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RequestParam;
-//import org.springframework.web.bind.annotation.ResponseStatus;
-//import org.springframework.web.bind.annotation.RestController;
-//
+//import org.springframework.web.bind.annotation.*;
 //import com.example.dto.ReceitaInfo;
 //import com.example.dto.ReceitaResponseDTO;
 //import com.example.organiza.model.Receita;
 //import com.example.organiza.model.Usuario;
 //import com.example.organiza.repository.ReceitaRepository;
 //import com.example.organiza.repository.UsuarioRepository;
-//
 //import jakarta.validation.Valid;
 //
 //@RestController
@@ -38,8 +27,6 @@
 //
 //    @Autowired
 //    private UsuarioRepository usuarioRepository;
-//
-//    
 //
 //    @GetMapping
 //    public List<Receita> listar() {
@@ -53,12 +40,11 @@
 //        BindingResult bindingResult
 //    ) {
 //        if (bindingResult.hasErrors()) {
-//  
 //            List<String> errors = bindingResult.getAllErrors()
 //                .stream()
 //                .map(DefaultMessageSourceResolvable::getDefaultMessage)
 //                .collect(Collectors.toList());
-//            return ResponseEntity.badRequest().body(new ReceitaResponseDTO("400", errors));
+//            return ResponseEntity.badRequest().body(new ReceitaResponseDTO("400", errors, null));
 //        }
 //
 //        Optional<Usuario> usuarioOptional = usuarioRepository.findById(idUsuario);
@@ -76,22 +62,17 @@
 //
 //        receitaRepository.save(novaReceita);
 //
-//   
 //        ReceitaInfo receitaInfo = new ReceitaInfo(
-//            novaReceita.getData(), 
-//            novaReceita.getValor(), 
+//            novaReceita.getData(),
+//            novaReceita.getValor(),
 //            novaReceita.getCategoria()
 //        );
 //
-//       
-//        ReceitaResponseDTO response = new ReceitaResponseDTO("201", "Receita criada com sucesso", receitaInfo);
+//        ReceitaResponseDTO response = new ReceitaResponseDTO("201", "Receita adicionada com sucesso", receitaInfo, idUsuario);
+//
 //
 //        return ResponseEntity.status(HttpStatus.CREATED).body(response);
 //    }
-//
-//
-//
-//
 //
 //    @GetMapping("/{id}")
 //    public ResponseEntity<Receita> buscarPeloId(@PathVariable Long id) {
@@ -115,7 +96,6 @@
 //        receita.setData(receitaAtualizada.getData());
 //        receita.setValor(receitaAtualizada.getValor());
 //        receita.setCategoria(receitaAtualizada.getCategoria());
-//      
 //
 //        receita = receitaRepository.save(receita);
 //
@@ -135,4 +115,3 @@
 //        return ResponseEntity.noContent().build();
 //    }
 //}
-//

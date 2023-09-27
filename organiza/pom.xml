@@ -43,8 +43,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<artifactId>lombok</artifactId>	
 		</dependency>
 <!--		<dependency>-->
 <!--   			<groupId>org.projectlombok</groupId>-->
@@ -53,13 +52,26 @@
 <!--    		<scope>provided</scope>-->
 <!--		</dependency>-->
 		<!-- https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
-<dependency>
-    <groupId>jakarta.validation</groupId>
-    <artifactId>jakarta.validation-api</artifactId>
-    <version>3.0.2</version>
-</dependency>
+		
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		    <version>4.0.1</version> <!-- Use a versão mais recente do Servlet API -->
+		    <scope>provided</scope>
+		</dependency>
 
-			<dependency>
+	<dependency>
+	    <groupId>jakarta.validation</groupId>
+	    <artifactId>jakarta.validation-api</artifactId>
+	    </dependency>
+    
+    <dependency>
+	    <groupId>io.springfox</groupId>
+	    <artifactId>springfox-boot-starter</artifactId>
+	    <version>3.0.0</version> <!-- Verifique a versão mais recente -->
+	</dependency>
+
+	<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>

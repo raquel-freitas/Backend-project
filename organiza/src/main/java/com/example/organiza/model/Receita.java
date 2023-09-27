@@ -36,12 +36,11 @@ public class Receita {
     private Usuario usuario;
 
     // Getter e Setter para 'data' usando formatação
-    public String getData() {
-        if (data != null) {
-            return data.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        }
-        return null;
+    public void setData(LocalDate data) {
+        this.data = data;
     }
+
+   
 
     public void setData(String dataString) {
         // Converter a String em um objeto LocalDate

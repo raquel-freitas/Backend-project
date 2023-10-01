@@ -3,6 +3,7 @@ package com.example.organiza;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+
 public class WebConfig implements WebMvcConfigurer {
 
     @Override
@@ -11,3 +12,4 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
 }
+

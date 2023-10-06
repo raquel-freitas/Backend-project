@@ -74,17 +74,18 @@ public class UsuarioController {
         @ApiResponse(code = 404, message = "Usuário não encontrado"),
         @ApiResponse(code = 500, message = "Erro interno no servidor")
     })
-    public ResponseEntity<Usuario> atualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuarioAtualizado) {
+    public ResponseEntity<Usuario> atualizarUsuario(@PathVariable Long id, @Valid @RequestBody Usuario usuarioAtualizado) {
         // Verifica se o usuário existe no banco de dados pelo id
         Optional<Usuario> usuarioExistente = usuarioRepository.findById(id);
 
         if (!usuarioExistente.isPresent()) {
-            // Se o usuário não existe, retorne um ResponseEntity com um status 404 (Not Found).
+            // Se o usuário não existe, retorne status 404 (Not Found).
             return ResponseEntity.notFound().build();
         }
 
         // Se existe, atualiza
         Usuario usuario = usuarioExistente.get();
+
 
         usuario.setNome(usuarioAtualizado.getNome());
         usuario.setCpf(usuarioAtualizado.getCpf());
@@ -96,6 +97,7 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
+
     @DeleteMapping("/{id}")
     @ApiOperation(value = "Excluir um usuário pelo ID")
     @ApiResponses(value = {
@@ -104,16 +106,18 @@ public class UsuarioController {
         @ApiResponse(code = 500, message = "Erro interno no servidor")
     })
     public ResponseEntity<Void> deletarUsuario(@PathVariable Long id) {
-        // ID existe ou não
-        java.util.Optional<Usuario> usuarioExistente = usuarioRepository.findById(id);
+        // Verifica se o usuário existe no banco de dados pelo ID
+        Optional<Usuario> usuarioExistente = usuarioRepository.findById(id);
 
         if (!usuarioExistente.isPresent()) {
-            // Se o usuário não existe, retorne um ResponseEntity com um status 404 (Not Found).
+            // Se o usuário não existe, retorna status 404 (Not Found).
             return ResponseEntity.notFound().build();
         }
 
+        //Se existe, exclui
         usuarioRepository.deleteById(id);
 
         // Exclusão bem sucedida.
         return ResponseEntity.noContent().build();
-    }}
+    }
+}
